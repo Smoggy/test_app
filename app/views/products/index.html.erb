@@ -1,0 +1,11 @@
+<h1> All products </h1>
+
+<%= link_to "Add", new_product_path %>
+
+<%= will_paginate %>
+
+<ul class="products">
+<%= render @products %>
+</ul>
+
+<%= will_paginate %>

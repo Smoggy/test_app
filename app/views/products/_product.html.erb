@@ -1,0 +1,9 @@
+<li>
+<%= product.title %>
+<%= product.description %>
+<%= "#{product.lat}/#{product.long}" %>
+<%= link_to "edit", edit_product_path(product) %>
+<%= link_to "delete", product, method: :delete, data: { confirm: "You sure?" } %>
+
+
+</li>
