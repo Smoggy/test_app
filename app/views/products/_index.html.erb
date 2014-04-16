@@ -1,0 +1,12 @@
+
+      	<% @products.each do |product| %>
+		    <tr data-link="<%= product_path(product) %>" >
+		      <td><%= product.title %></td>
+		      <td><%= product.description %></td>
+		      <td><%= "#{product.lat}/#{product.long}" %></td>
+		      <td>
+		      		<%= link_to("edit", edit_product_path(product) , remote: true,  class: "btn") %>
+					<%= link_to("delete", product_delete_path(product), remote: true, class: "btn btn-danger") %>
+			</td>
+		    </tr>
+		<% end %>

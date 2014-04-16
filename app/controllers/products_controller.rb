@@ -1,7 +1,9 @@
 class ProductsController < ApplicationController
+	respond_to :html, :js
+
 
 	def index
-		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
+		@products = Product.all.order(created_at: :desc).paginate(page: params[:page]) 
 	end
 
 	def show
@@ -13,12 +15,9 @@ class ProductsController < ApplicationController
 	end
 
 	def create
-		@product = Product.new(product_params)
-    	if @product.save 
-      		redirect_to products_path
-    	else
-      		render 'new'
-    	end
+		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
+		@product = Product.create(product_params)
+		render :index
 	end
 
 	def edit
@@ -26,17 +25,23 @@ class ProductsController < ApplicationController
 	end
 
 	def update
-		if Product.find(params[:id]).update_attributes(product_params)
-      		redirect_to products_path
-    	else
-      		render 'edit'
-    	end
+		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
+		@product = Product.find(params[:id])
+
+		@product.update_attributes(product_params)
+
+		render :index
 	end
 
+	def delete
+		@product = Product.find(params[:product_id])
+	end
+
+
 	def destroy
-		product = Product.find(params[:id])
-		product.destroy
-		redirect_to products_path
+		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
+		@product = Product.find(params[:id])
+		@product.destroy
 	end
 
 	private 

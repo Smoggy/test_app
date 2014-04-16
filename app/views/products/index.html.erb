@@ -1,6 +1,8 @@
 <h1> All products </h1>
 
-<%= link_to("Add", new_product_path, class: "btn btn-primary") %>
+<%= link_to("Add", new_product_path, remote: true,  class: "btn btn-primary") %>
+<div class="new-product"></div>
+
 
 <%= will_paginate %>
 
@@ -13,20 +15,10 @@
           <th>-</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="product-index" >
 
+        <%= render "index" %>
 
-      	<% @products.each do |product| %>
-		    <tr data-link="<%= product_path(product) %>" >
-		      <td><%= product.title %></td>
-		      <td><%= product.description %></td>
-		      <td><%= "#{product.lat}/#{product.long}" %></td>
-		      <td>
-		      		<%= link_to("edit", edit_product_path(product) , :class => "btn btn-inverse") %>
-					<%= link_to("delete", product, method: :delete, data: { confirm: "You sure?" }, :class => "btn btn-inverse") %>
-			</td>
-		    </tr>
-		<% end %>
       </tbody>
     </table>
 
@@ -34,3 +26,8 @@
 
 
 <%= will_paginate %>
+<div id="product-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div id="inner-product-modal" class="modal-content"></div>
+  </div>
+</div>
