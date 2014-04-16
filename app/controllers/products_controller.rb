@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
 	def index
-		@products = Product.all.paginate(page: params[:page])
+		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
 	end
 
 	def show
@@ -42,6 +42,6 @@ class ProductsController < ApplicationController
 	private 
 
 	def product_params
-		params.require(:product).permit(:title, :description, :lat, :long )
+		params.require(:product).permit(:title, :description, :lat, :long, :avatar)
 	end
 end

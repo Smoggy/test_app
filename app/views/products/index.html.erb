@@ -1,11 +1,36 @@
 <h1> All products </h1>
 
-<%= link_to "Add", new_product_path %>
+<%= link_to("Add", new_product_path, class: "btn btn-primary") %>
 
 <%= will_paginate %>
 
-<ul class="products">
-<%= render @products %>
-</ul>
+<table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Lat/Long</th>
+          <th>-</th>
+        </tr>
+      </thead>
+      <tbody>
+
+
+      	<% @products.each do |product| %>
+		    <tr data-link="<%= product_path(product) %>" >
+		      <td><%= product.title %></td>
+		      <td><%= product.description %></td>
+		      <td><%= "#{product.lat}/#{product.long}" %></td>
+		      <td>
+		      		<%= link_to("edit", edit_product_path(product) , :class => "btn btn-inverse") %>
+					<%= link_to("delete", product, method: :delete, data: { confirm: "You sure?" }, :class => "btn btn-inverse") %>
+			</td>
+		    </tr>
+		<% end %>
+      </tbody>
+    </table>
+
+
+
 
 <%= will_paginate %>

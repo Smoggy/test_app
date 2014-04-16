@@ -1,0 +1,16 @@
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            
+			<%= image_tag(@product.avatar)%>
+        </div>
+        <div class="col-md-8">
+        	Title: <%= @product.title %> </br>
+            Description: <%= @product.description %></br>
+			Lat/Long: <%= "#{@product.lat}/#{@product.long}" %></br>
+        </div>
+    </div>
+</div>
+<%= link_to("Back", :back, :class => "btn btn-primary") %>

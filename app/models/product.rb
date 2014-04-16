@@ -3,4 +3,6 @@ class Product < ActiveRecord::Base
 	validates :description, presence: true
 	validates :lat, presence: true
 	validates :long, presence: true
+
+	mount_uploader :avatar, AvatarUploader
 end

@@ -23,6 +23,17 @@ group :production do
   gem 'rails_12factor', '0.0.2'
 end
 
+#for paperclip
+gem 'paperclip'
+gem 'aws-sdk'
+
+
+gem 'fog'
+# photo resizing
+gem "mini_magick"
+# file upload solution
+gem 'carrierwave'
+
 
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
