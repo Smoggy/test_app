@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
 	respond_to :html, :js
 	before_action :authenticate_user!, :except => [:index, :show]
+	
 
 	def index
 		@products = Product.all.order(created_at: :desc).paginate(page: params[:page]) 
