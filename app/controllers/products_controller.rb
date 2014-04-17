@@ -1,10 +1,10 @@
 class ProductsController < ApplicationController
 	respond_to :html, :js
 	before_action :authenticate_user!, :except => [:index, :show]
-	
+
 
 	def index
-		@products = Product.all.order(created_at: :desc).paginate(page: params[:page]) 
+		@products = Product.all_sorted.paginate(page: params[:page]) 
 	end
 
 	def show
@@ -16,9 +16,14 @@ class ProductsController < ApplicationController
 	end
 
 	def create
-		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
+		@products = Product.all_sorted.paginate(page: params[:page])
 		@product = Product.create(product_params)
-		#render :index
+
+
+		respond_to do |format|
+      		format.html { render :index } 
+      		format.js
+    	end
 	end
 
 	def edit
@@ -26,12 +31,15 @@ class ProductsController < ApplicationController
 	end
 
 	def update
-		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
+		@products = Product.all_sorted.paginate(page: params[:page])
 		@product = Product.find(params[:id])
 
 		@product.update_attributes(product_params)
 
-		#render :index
+		respond_to do |format|
+      		format.html { render :index } 
+      		format.js
+    	end
 	end
 
 	def delete
@@ -40,7 +48,7 @@ class ProductsController < ApplicationController
 
 
 	def destroy
-		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
+		@products = Product.all_sorted.paginate(page: params[:page])
 		@product = Product.find(params[:id])
 		@product.destroy
 	end
