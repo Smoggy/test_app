@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 	respond_to :html, :js
-
+	before_action :authenticate_user!, :except => [:index, :show]
 
 	def index
 		@products = Product.all.order(created_at: :desc).paginate(page: params[:page]) 
@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
 	def create
 		@products = Product.all.order(created_at: :desc).paginate(page: params[:page])
 		@product = Product.create(product_params)
-		render :index
+		#render :index
 	end
 
 	def edit
@@ -30,7 +30,7 @@ class ProductsController < ApplicationController
 
 		@product.update_attributes(product_params)
 
-		render :index
+		#render :index
 	end
 
 	def delete

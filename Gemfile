@@ -28,6 +28,7 @@ end
 gem 'paperclip'
 gem 'aws-sdk'
 
+gem 'devise'
 
 gem 'fog'
 # photo resizing

@@ -1,0 +1,12 @@
+    <div class="modal-header">
+    	<h3> <%= @product.title %> </h3>
+    </div>
+
+    <div class="modal-body">
+    	<%= image_tag(@product.avatar)%>
+    	Description: <%= @product.description %></br>
+		Lat/Long: <%= "#{@product.lat}/#{@product.long}" %>
+    </div>
+    <div class="modal-footer">
+    <%= link_to "Back", "#", class: "btn", data: { dismiss: "modal" } %>
+    </div>
