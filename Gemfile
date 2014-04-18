@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 group :development, :test do
   gem 'sqlite3'
+  gem 'pry'
 end
 
 gem 'bootstrap-sass'
@@ -18,6 +19,7 @@ gem 'bootstrap-will_paginate'
 gem 'rspec-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
+gem 'protected_attributes'
 
 group :production do
   gem 'pg', '0.15.1'
