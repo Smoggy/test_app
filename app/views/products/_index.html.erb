@@ -3,6 +3,14 @@
 		    <tr data-link="<%= product_path(product) %>" >
 		      <td><%= link_to "#{product.title}", product_path(product), remote: true %></td>
 		      <td><%= product.description %></td>
+		      <td>
+		      		<% unless product.user.nil? %>
+		      			<%= product.user.username %>
+		      		<% else %>
+						Old version. No user
+					<% end %>
+
+		      </td>
 		      <td><%= "#{product.lat}/#{product.long}" %></td>
 		      <td>
 		      		<% if user_signed_in? %>

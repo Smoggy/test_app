@@ -5,7 +5,8 @@
     <div class="modal-body">
     	<%= image_tag(@product.avatar)%>
     	Description: <%= @product.description %></br>
-		Lat/Long: <%= "#{@product.lat}/#{@product.long}" %>
+		Lat/Long: <%= "#{@product.lat}/#{@product.long}" %></br>
+        Owner: <%= @product.user.email %>
     </div>
     <div class="modal-footer">
     <%= link_to "Back", "#", class: "btn", data: { dismiss: "modal" } %>

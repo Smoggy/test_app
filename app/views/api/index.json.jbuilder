@@ -12,4 +12,10 @@ json.products @products do |product|
   json.avatar product.avatar
   json.lat	product.lat
   json.long	product.long
+
+  json.author do
+       json.email product.user.email
+       json.name  product.user.username
+       json.token product.user.token
+  	end
 end

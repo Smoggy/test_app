@@ -5,54 +5,87 @@ class ApiController < ApplicationController
  
 
 	def login
-		    resource = User.find_for_database_authentication(:email=>params[:email])
-		    return invalid_login_attempt unless resource
+		    @user = User.exists? params[:email]
+		    return invalid_login_attempt unless @user
 		 
-		    if resource.valid_password?(params[:password])
-		      sign_in("user", resource)
-		      render :json=> {:success=>true, :login=>resource.email}
+		    if @user.valid_password?(params[:password])
+		      sign_in("user", @user)
+		      session[:token] = @user.token
+		      respond_with @user
 		    else
 		    	invalid_login_attempt
 		    end
 	end
 
 	def signout
-		resource = User.find_for_database_authentication(:email=>params[:email])
-
-		unless resource
+		@user = User.exists? params[:email]
+		unless @user
 			render :json=> {:success=>false, :message=>"no such user"}
 		else
-			sign_out(resource)
-			render :json=> {:success=>true }
+			sign_out(@user)
+			session[:token] =  nil
+			respond_with @user
 		end
 	end
-	
-	
+
+	def create_user
+
+		if User.exists? params[:email]
+			render :json=> {:success=>false, :message=>"already_exists"}
+		elsif  password_idenical?(params[:password], params[:password_confirmation])
+			render :json=> {:success=>false, :message=>"passwords dismissed"}
+		else
+			@user = User.make_user params
+
+			if @user.valid?
+				@user.save
+				sign_in @user
+				session[:token] = @user.token
+				respond_with @user
+			else
+				render :json=> {:success=>false, :message => @user.errors.messages }
+			end
+		end
+	end
 
 	def create
-		respond_with Product.create(product_params)
+		if session[:token]
+			@product = Product.new(product_params)
+			@product.user = User.find_by_token(session[:token])
+			@product.save
+			respond_with @product
+		else
+			render :json=> {:success=>false, :message => "first login" }
+		end
 	end
 
 	def index
-
 		@products =  Product.all_sorted.paginate(page: params[:page])
-		respond_with @products
 	end
 
 	def show
 		@product = Product.find(params[:id])
-        respond_with @product
+		@user = User.find_by_token(@product.owner_token)
     end
 
     def update
     	@product = Product.find(params[:id])
-    	@product.update_attributes(product_params)
-        respond_with @product
+    	if @product.user == User.find_by_token(session[:token])
+    		@product.update_attributes(product_params)
+        	respond_with @product
+        else
+        	render :json=> {:success=>false, :message => "you didn't created this product" }
+        end
     end
 
 	def destroy
-
-        respond_with Product.destroy(params[:id])
+		@product = Product.find(params[:id])
+		if @product.user == User.find_by_token(session[:token])
+			@product.destroy
+        	render :json=> {:message => "product deleted" }
+        else
+        	render :json=> {:success=>false, :message => "you didn't created this product" }
+        end
     end
 
 
@@ -79,4 +112,9 @@ class ApiController < ApplicationController
 	def product_params
 		params.require(:product).permit(:title, :description, :lat, :long, :avatar)
 	end
+
+	def password_idenical?(first, second)
+		first != second
+	end
+
 end
