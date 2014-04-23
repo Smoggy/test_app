@@ -1,0 +1,25 @@
+
+[1mFrom:[0m /home/vova/rails_apps/test_app/app/controllers/products_controller.rb @ line 25 ProductsController#create:
+
+    [1;34m20[0m: 	[32mdef[0m [1;34mcreate[0m
+    [1;34m21[0m: 
+    [1;34m22[0m: 		@products = [1;34;4mProduct[0m.all_sorted.paginate([35mpage[0m: params[[33m:page[0m])
+    [1;34m23[0m: 		@product = [1;34;4mProduct[0m.new(product_params)
+    [1;34m24[0m: 		@product.user = current_user
+ => [1;34m25[0m: 		binding.pry
+    [1;34m26[0m: 		[32mif[0m @product.save
+    [1;34m27[0m: 
+    [1;34m28[0m: 
+    [1;34m29[0m: 			params[[33m:photos[0m][[31m[1;31m'[0m[31mphoto[1;31m'[0m[31m[0m].each [32mdo[0m |a|
+    [1;34m30[0m: 				@product.photos.create!([33m:photo[0m => a, [33m:product_id[0m => @product.id)
+    [1;34m31[0m: 			[32mend[0m
+    [1;34m32[0m: 		[32mend[0m
+    [1;34m33[0m: 
+    [1;34m34[0m: 
+    [1;34m35[0m: 
+    [1;34m36[0m: 		respond_to [32mdo[0m |format|
+    [1;34m37[0m:       		format.html { render [33m:index[0m } 
+    [1;34m38[0m:       		format.js
+    [1;34m39[0m:     	[32mend[0m
+    [1;34m40[0m: 	[32mend[0m
+

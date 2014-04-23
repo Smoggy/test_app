@@ -17,3 +17,9 @@
 //= require dropzone
 //= require_tree .
 //= require jquery-fileupload/basic
+
+
+    
+    $("#some_test").click(function() {
+    	alert("a");
+    })

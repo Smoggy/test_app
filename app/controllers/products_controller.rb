@@ -14,7 +14,6 @@ class ProductsController < ApplicationController
 
 	def new
 		@product = Product.new
-		@photos = @product.photos.build
 	end
 
 	def create
@@ -22,8 +21,10 @@ class ProductsController < ApplicationController
 		@products = Product.all_sorted.paginate(page: params[:page])
 		@product = Product.new(product_params)
 		@product.user = current_user
+
 		if @product.save
-			params[:photos]['photo'].each do |a|
+			
+			params[:photos][:photo].each do |a|
 				@product.photos.create!(:photo => a, :product_id => @product.id)
 			end
 		end
@@ -44,7 +45,22 @@ class ProductsController < ApplicationController
 		@products = Product.all_sorted.paginate(page: params[:page])
 		@product = Product.find(params[:id])
 		if @product.user.eql? current_user
-			@product.update_attributes(product_params)
+			if @product.update_attributes(product_params)
+				
+				unless params[:activated].empty?
+					params[:activated].each do |id|
+						@product.photos.destroy(id.to_i)
+					end
+				end
+
+
+
+				unless params[:photos].nil?
+					params[:photos]['photo'].each do |a|
+						@product.photos.create!(:photo => a, :product_id => @product.id)
+					end
+				end
+			end
 		else
 			@product.errors.add(:error, "you are not owner")
 		end

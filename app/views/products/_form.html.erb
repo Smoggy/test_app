@@ -4,7 +4,13 @@
    <ul class="errors"></ul>
   <fieldset >
  
-
+        <div class="control-group">
+      <%= f.label :avatar,  class: "control-label" %>
+      <div class="controls">
+          <%= f.file_field :avatar %>
+      </div>
+    </div>
+    
     <%= f.fields_for :photos do |p| %>
      <div class="field">
        <%= p.label :photo %><br>
@@ -12,8 +18,13 @@
      </div>
    <% end %>
 
-   
-
+   <% unless @product.photos.empty? %>
+    <% @product.photos.each do |p| %>
+        <% binding.pry %>
+        <%= image_tag p.photo.large_photo %>
+        <%= check_box_tag 'activated[]',p.id %>
+      <% end %>
+    <% end %>
     <div class="control-group">
       <%= f.label :title,  class: "control-label" %>
       <div class="controls">

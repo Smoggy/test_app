@@ -3,12 +3,12 @@
     </div>
 
     <% @product.photos.each do |p| %>
-        <%= image_tag p.photo.url, :size => "150x150" %>
+        <%= image_tag p.photo.large_photo %>
     <% end %>
 
-
+ 
     <div class="modal-body">
-    	<%= image_tag(@product.avatar)%>
+    	<%= image_tag @product.avatar.large_avatar %>
     	Description: <%= @product.description %></br>
 		Lat/Long: <%= "#{@product.lat}/#{@product.long}" %></br>
         Owner: <%= @product.user.email %>

@@ -32,6 +32,9 @@ gem 'aws-sdk'
 
 gem 'devise'
 
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'oauth2'
 gem 'fog'
 # photo resizing
 gem "mini_magick"
