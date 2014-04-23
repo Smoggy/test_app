@@ -1,5 +1,6 @@
 <h1> All products </h1>
 
+
 <% if user_signed_in? %>
   <%= link_to("Add", new_product_path, remote: true,  class: "btn btn-primary") %>
 <% end %>

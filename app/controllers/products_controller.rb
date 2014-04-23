@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
 
 	def new
 		@product = Product.new
+		@photos = @product.photos.build
 	end
 
 	def create
@@ -21,7 +22,12 @@ class ProductsController < ApplicationController
 		@products = Product.all_sorted.paginate(page: params[:page])
 		@product = Product.new(product_params)
 		@product.user = current_user
-		@product.save
+		if @product.save
+			params[:photos]['photo'].each do |a|
+				@product.photos.create!(:photo => a, :product_id => @product.id)
+			end
+		end
+
 
 
 		respond_to do |format|
@@ -67,7 +73,7 @@ class ProductsController < ApplicationController
 	private 
 
 	def product_params
-		params.require(:product).permit(:title, :description, :lat, :long, :avatar)
+		params.require(:product).permit(:title, :description, :lat, :long, :avatar, photos: [ :id, :product_id, :photo])
 	end
 
 	def add_token

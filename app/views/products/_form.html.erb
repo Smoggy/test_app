@@ -1,16 +1,18 @@
 
-<%= form_for @product, remote: true, :authenticity_token => true, html: {class: "form-horizontal center"} do |f| %>
+<%= form_for @product, remote: true, :authenticity_token => true, html: {class: "form-horizontal center", :id => 'student_form'} do |f| %>
    <div class="modal-body">
    <ul class="errors"></ul>
   <fieldset >
+ 
 
-    <div class="control-group">
-      <%= f.label :avatar,  class: "control-label" %>
-      <div class="controls">
-          <%= f.file_field :avatar %>
-      </div>
-    </div>
+    <%= f.fields_for :photos do |p| %>
+     <div class="field">
+       <%= p.label :photo %><br>
+       <%= p.file_field :photo, :multiple => true, name: "photos[photo][]" %>
+     </div>
+   <% end %>
 
+   
 
     <div class="control-group">
       <%= f.label :title,  class: "control-label" %>

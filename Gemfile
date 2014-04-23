@@ -11,7 +11,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'pry'
 end
-
+gem "jquery-fileupload-rails"
 gem 'bootstrap-sass'
 
 gem 'will_paginate'
@@ -40,6 +40,6 @@ gem 'carrierwave'
 
 
 gem 'sdoc', '~> 0.4.0',          group: :doc
-
+gem 'dropzonejs-rails'
 
 gem 'spring',        group: :development

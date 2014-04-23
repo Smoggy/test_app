@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   	get "delete"
   end
 
+  resources :photos do
+    delete "destroy"
+  end
 
   controller :api do
   	get '/api/product_list' => "api#index"

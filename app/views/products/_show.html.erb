@@ -2,6 +2,11 @@
     	<h3> <%= @product.title %> </h3>
     </div>
 
+    <% @product.photos.each do |p| %>
+        <%= image_tag p.photo.url, :size => "150x150" %>
+    <% end %>
+
+
     <div class="modal-body">
     	<%= image_tag(@product.avatar)%>
     	Description: <%= @product.description %></br>
