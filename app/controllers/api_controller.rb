@@ -5,6 +5,7 @@ class ApiController < ApplicationController
  
 
 	def login
+		binding.pry
 		    @user = User.exists? params[:email]
 		    return invalid_login_attempt unless @user
 		 
@@ -29,7 +30,6 @@ class ApiController < ApplicationController
 	end
 
 	def create_user
-
 		if User.exists? params[:email]
 			render :json=> {:success=>false, :message=>"already_exists"}
 		elsif  password_idenical?(params[:password], params[:password_confirmation])
@@ -49,9 +49,10 @@ class ApiController < ApplicationController
 	end
 
 	def create
-		if session[:token]
+		@user = User.find_by_token(params:token)
+		if @user
 			@product = Product.new(product_params)
-			@product.user = User.find_by_token(session[:token])
+			@product.user = @user
 			@product.save
 			respond_with @product
 		else
@@ -70,7 +71,7 @@ class ApiController < ApplicationController
 
     def update
     	@product = Product.find(params[:id])
-    	if @product.user == User.find_by_token(session[:token])
+    	if @product.user == User.find_by_token(params[:token])
     		@product.update_attributes(product_params)
         	respond_with @product
         else
@@ -80,7 +81,7 @@ class ApiController < ApplicationController
 
 	def destroy
 		@product = Product.find(params[:id])
-		if @product.user == User.find_by_token(session[:token])
+		if @product.user == User.find_by_token(params[:token])
 			@product.destroy
         	render :json=> {:message => "product deleted" }
         else
