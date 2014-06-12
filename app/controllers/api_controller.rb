@@ -5,7 +5,6 @@ class ApiController < ApplicationController
  
 
 	def login
-		binding.pry
 		    @user = User.exists? params[:email]
 		    return invalid_login_attempt unless @user
 		 
