@@ -48,7 +48,7 @@ class ApiController < ApplicationController
 	end
 
 	def create
-		@user = User.find_by_token(params:token)
+		@user = User.find_by_token(params[:token])
 		if @user
 			@product = Product.new(product_params)
 			@product.user = @user
