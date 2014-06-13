@@ -22,15 +22,8 @@ class ProductsController < ApplicationController
 		@product = Product.new(product_params)
 		@product.user = current_user
 
-		if @product.save
-			
-			params[:photos][:photo].each do |a|
-				@product.photos.create!(:photo => a, :product_id => @product.id)
-			end
-		end
-
-
-
+		@product.save
+		
 		respond_to do |format|
       		format.html { render :index } 
       		format.js
@@ -45,22 +38,8 @@ class ProductsController < ApplicationController
 		@products = Product.all_sorted.paginate(page: params[:page])
 		@product = Product.find(params[:id])
 		if @product.user.eql? current_user
-			if @product.update_attributes(product_params)
-				
-				unless params[:activated].empty?
-					params[:activated].each do |id|
-						@product.photos.destroy(id.to_i)
-					end
-				end
-
-
-
-				unless params[:photos].nil?
-					params[:photos]['photo'].each do |a|
-						@product.photos.create!(:photo => a, :product_id => @product.id)
-					end
-				end
-			end
+			@product.update_attributes(product_params)
+			
 		else
 			@product.errors.add(:error, "you are not owner")
 		end
@@ -89,7 +68,7 @@ class ProductsController < ApplicationController
 	private 
 
 	def product_params
-		params.require(:product).permit(:title, :description, :lat, :long, :avatar, photos: [ :id, :product_id, :photo])
+		params.require(:product).permit(:title, :description, :lat, :long, :avatar)
 	end
 
 	def add_token
