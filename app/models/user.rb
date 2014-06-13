@@ -20,7 +20,8 @@ class User < ActiveRecord::Base
   def self.make_user params
   	self.new(:email => params[:email],
 	                 :password => params[:password],
-	                 :password_confirmation => params[:password_confirmation])
+	                 :password_confirmation => params[:password_confirmation],
+                   :username => params[:username])
   end
 
    private

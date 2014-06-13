@@ -11,7 +11,7 @@ json.products @products do |product|
   json.description product.description
   json.avatar product.avatar.url
   json.long	product.long
-
+  json.lat  product.lat
   json.author do
        json.email product.user.email
        json.name  product.user.username
