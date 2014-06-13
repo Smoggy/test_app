@@ -1,7 +1,6 @@
 
 
 json.product do
-
 	json.id @product.id
   	json.title @product.title
   	json.description @product.description

@@ -9,7 +9,7 @@ json.products @products do |product|
   json.id product.id
   json.title product.title
   json.description product.description
-  json.avatar product.avatar.path
+  json.avatar (request.host +  product.avatar.path)
   json.long	product.long
 
   json.author do
